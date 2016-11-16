@@ -1,0 +1,10 @@
+@import '../../style/base.css';
+
+.red {
+    color:var(--mainColor);
+    font-size:80px;
+    .good {
+        color:yellow;
+        border:1px solid #005466;
+    }
+}
