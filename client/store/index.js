@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import thunk from 'redux-thunk'
+import promise from 'redux-promise'
 import createLogger from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 
@@ -21,7 +22,7 @@ const logger = createLogger()
 const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(thunk, sagaMiddleware, logger)
+    applyMiddleware(thunk, promise, sagaMiddleware, logger)
 )
 
 sagaMiddleware.run(rootSaga)

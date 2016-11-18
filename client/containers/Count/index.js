@@ -13,6 +13,7 @@ class Count extends Component {
         this.addHandle = this.addHandle.bind(this)
         this.subHandle = this.subHandle.bind(this)
         this.delayHandle = this.delayHandle.bind(this)
+        this.sagaHandle = this.sagaHandle.bind(this)
     }
 
     addHandle() {
@@ -27,6 +28,10 @@ class Count extends Component {
         this.props.delayIncrement(parseInt(this.props.number))
     }
 
+    sagaHandle() {
+        this.props.sagaRequest()
+    }
+
     render() {
         const { count } = this.props
         return (
@@ -38,6 +43,7 @@ class Count extends Component {
                 <button onClick={this.addHandle}>add</button>
                 <button onClick={this.subHandle}>sub</button>
                 <button onClick={this.delayHandle}>delay</button>
+                <button onClick={this.sagaHandle}>delay</button>
             </div>
         )
     }

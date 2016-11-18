@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+        li {
+            list-style:none;
+        }
+        #root {
+            width:620px;
+            overflow:hidden;
+            margin:0 auto;
+            margin-top:50px;
+            /*border:1px solid red;*/
+        }
+
+        #root .item {
+            float:left;
+            width:300px;
+            height:200px;
+            line-height:200px;
+            text-align:center;
+            margin-bottom:20px;
+            border:1px solid yellow;
+            box-sizing:border-box;
+        }
+
+        #root .item:nth-of-type(2n + 1) {
+            margin-right:20px;
+        }
+
+        #root .item.null {
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <ul id="root"></ul>
+    <script>
+        window.onload = function() {
+
+            // 这是数据
+            var res = {
+                success : true,
+                result : [
+                    {
+                        id : 1,
+                        entry : '这是入园',
+                        out : '这是出园'
+                    },
+                    {
+                        id : 2,
+                        entry : '这是入园',
+                        out : null // 出园为空
+                    },
+                    {
+                        id : 3,
+                        entry : null,
+                        out : '这是出园'
+                    }
+                ]
+            }
+
+
+            // 拼字符串
+            function render(data) {
+                var _html = data.map(function(item) {
+                    if (item.entry === null) {
+                        return (
+                            '<li>' +
+                                '<div class="item entry null">入园为null不显示</div>' +
+                                '<div class="item out">' + item.out  + '</div>' +
+                            '</li>'
+                        )
+                    }
+
+                    if (item.out === null) {
+                        return (
+                            '<li>' +
+                                '<div class="item entry">' + item.entry + '</div>' +
+                                '<div class="item out null">出园为null不显示</div>' +
+                            '</li>'
+                        )
+                    }
+
+                    return (
+                        '<li>' +
+                            '<div class="item entry">' + item.entry + '</div>' +
+                            '<div class="item out">' + item.out + '</div>' +
+                        '</li>'
+                    )
+                }).join('')
+
+                return _html
+            }
+
+            var list = document.getElementById('root')
+
+            list.innerHTML = render(res.result)
+
+        }
+    </script>
+</body>
+</html>

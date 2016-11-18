@@ -8,11 +8,12 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import webpackConfig from '../webpack.config.dev'
 
+import users from './router'
+
+
 const PORT = process.env.PORT || 3001
 const app = express()
 const compiler = webpack(webpackConfig)
-
-
 
 app.use(webpackDevMiddleware(compiler, {
     noInfo : true,
@@ -20,6 +21,8 @@ app.use(webpackDevMiddleware(compiler, {
 }))
 app.use(webpackHotMiddleware(compiler))
 
+
+app.use('/users', users)
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'))

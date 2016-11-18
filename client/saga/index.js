@@ -1,16 +1,30 @@
 'use strict'
 
-import { takeEvery, takeLatest, delay } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { takeEvery } from 'redux-saga'
+import { call, put, fork } from 'redux-saga/effects'
+import { REQUEST_USER_DATA, REQUEST_USER_DATA_SUCCESS, REQUEST_USER_DATA_FAILURE } from '../constants'
+import axios from 'axios'
 
-import { INCREMENT, DECREMENT } from '../constants'
-
-
-export function* incrementAsync(action) {
-  yield call(delay, 3000)
-  yield put({type: INCREMENT, number : action.number})
+function getUsers() {
+  return  axios.get('/users') 
 }
 
+
+
+export function* fetchUsers(action) {
+
+  try {
+    const { data } =  yield call(getUsers)
+    yield put({type : REQUEST_USER_DATA_SUCCESS, users : data})
+
+  } catch (e) {
+    yield put({type : REQUEST_USER_DATA_FAILURE, error : 'wrong!!!'})
+  }
+
+}
+
+
+
 export default function* rootSaga() {
-  yield* takeEvery('INCREMENT_ASYNC', incrementAsync)
+  yield takeEvery(REQUEST_USER_DATA, fetchUsers)
 }
